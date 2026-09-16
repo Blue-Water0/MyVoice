@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=MyVoice
+GenericName=Voice Dictation
+Comment=Privacy-first local voice dictation
+Exec=myvoice
+Icon=audio-input-microphone
+Terminal=false
+Categories=Utility;Accessibility;AudioVideo;
+Keywords=dictation;speech;voice;whisper;
+StartupNotify=false

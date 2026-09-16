@@ -1,0 +1,11 @@
+#!/bin/bash
+# Cleans up the venv created by postinst (dpkg doesn't track it since it
+# wasn't part of the package payload). Never touches user data under
+# ~/.config/Myvoice or ~/.cache/Myvoice.
+set -e
+
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+    rm -rf /usr/lib/myvoice/venv
+fi
+
+exit 0

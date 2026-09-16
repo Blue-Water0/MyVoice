@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MyVoice
+Comment=Local voice dictation
+Exec=myvoice
+Icon=audio-input-microphone
+Terminal=false
+X-GNOME-Autostart-enabled=true

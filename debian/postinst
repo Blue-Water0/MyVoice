@@ -1,0 +1,43 @@
+#!/bin/bash
+# Runs automatically when the .deb finishes installing.
+# Sets up a private venv under /usr/lib/myvoice and installs MyVoice's
+# Python dependencies into it. Requires internet access.
+set -e
+
+APP_DIR="/usr/lib/myvoice"
+SRC_DIR="$APP_DIR/src"
+VENV_DIR="$APP_DIR/venv"
+PYTHON_BIN="python3"
+
+PYV=$("$PYTHON_BIN" -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+PYMAJ=$("$PYTHON_BIN" -c 'import sys; print(sys.version_info[0])')
+PYMIN=$("$PYTHON_BIN" -c 'import sys; print(sys.version_info[1])')
+
+if [ "$PYMAJ" -lt 3 ] || { [ "$PYMAJ" -eq 3 ] && [ "$PYMIN" -lt 11 ]; }; then
+    echo "ERROR: MyVoice requires Python 3.11+ (found $PYV)." >&2
+    echo "On Mint 21 install python3.11 via deadsnakes, or use Mint 22." >&2
+    exit 1
+fi
+
+echo "==> MyVoice: setting up Python environment (this needs internet access)..."
+if [ ! -d "$VENV_DIR" ]; then
+    "$PYTHON_BIN" -m venv --system-site-packages "$VENV_DIR"
+fi
+
+"$VENV_DIR/bin/python" -m pip install --upgrade pip wheel setuptools -q
+
+echo "==> Installing MyVoice's Python dependencies (faster-whisper, numpy, etc.)..."
+if ! "$VENV_DIR/bin/pip" install -q -r "$SRC_DIR/requirements.txt"; then
+    echo "ERROR: failed to install Python dependencies." >&2
+    echo "Check your internet connection, then run: sudo apt install --reinstall myvoice" >&2
+    exit 1
+fi
+echo "==> MyVoice dependencies installed successfully."
+
+update-desktop-database /usr/share/applications 2>/dev/null || true
+
+echo
+echo "MyVoice is ready. Launch it from the applications menu, or run: myvoice"
+echo "The speech model downloads automatically the first time you start dictating."
+
+exit 0

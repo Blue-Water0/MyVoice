@@ -1,0 +1,21 @@
+# Runtime deps installed inside the venv by install.sh.
+# System deps (GTK, PyGObject, AT-SPI, xdotool, portaudio) come from apt.
+
+# Speech
+faster-whisper>=1.0.3
+
+# Audio capture
+sounddevice>=0.4.6
+numpy>=1.24
+
+# VAD
+webrtcvad>=2.0.10
+
+# X11 hotkey + click-through
+python-xlib>=0.33
+
+# Recognizable process name in ps/top/System Monitor
+setproctitle>=1.3
+
+# Notifications / packaging helpers
+# (PyGObject/pyatspi come from apt: python3-gi, python3-pyatspi)

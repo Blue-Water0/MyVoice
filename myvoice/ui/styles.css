@@ -1,0 +1,234 @@
+/* MyVoice — GTK 3 CSS. Fixed branded dark theme (independent of the
+   user's system GTK theme). See
+   docs/superpowers/specs/2026-07-18-full-ui-redesign-design.md. */
+
+@define-color myvoice_bg #14141C;
+@define-color myvoice_surface #1C1C28;
+@define-color myvoice_surface_raised #242433;
+@define-color myvoice_border alpha(#ffffff, 0.08);
+@define-color myvoice_text #F2F1F7;
+@define-color myvoice_text_muted #9694AC;
+@define-color myvoice_accent_a #7C5CFF;
+@define-color myvoice_accent_b #22D3EE;
+@define-color myvoice_status_listen #FF5C87;
+@define-color myvoice_status_process #FBBF54;
+@define-color myvoice_status_ready #34D399;
+@define-color myvoice_status_error #FF5C5C;
+@define-color myvoice_status_idle #8B899E;
+
+/* Applied to the MainWindow and both Settings dialogs so every child
+   label/control inherits a legible foreground on the fixed dark
+   background, regardless of the user's system GTK theme. */
+.myvoice-window {
+    background-color: @myvoice_bg;
+    color: @myvoice_text;
+}
+
+.myvoice-title {
+    color: @myvoice_accent_a;
+}
+
+.myvoice-status {
+    font-size: 12pt;
+    padding: 4px 8px;
+}
+
+.myvoice-status-idle    { color: @myvoice_status_idle; }
+.myvoice-status-listen  { color: @myvoice_status_listen; font-weight: bold; }
+.myvoice-status-process { color: @myvoice_status_process; }
+.myvoice-status-ready   { color: @myvoice_status_ready; }
+.myvoice-status-error   { color: @myvoice_status_error; font-weight: bold; }
+
+/* Start/Stop button. Background gradient + box-shadow are the two
+   properties the breathing-glow classes below animate between. */
+.myvoice-big-button {
+    padding: 18px 24px;
+    font-size: 16pt;
+    font-weight: bold;
+    border-radius: 14px;
+    color: #ffffff;
+    background-image: linear-gradient(135deg, @myvoice_accent_a, @myvoice_accent_b);
+    border: none;
+    box-shadow: 0 8px 24px -8px alpha(@myvoice_accent_a, 0.45);
+    transition: box-shadow 1300ms ease-in-out, background-color 150ms ease;
+}
+
+.myvoice-big-button:hover {
+    box-shadow: 0 10px 32px -6px alpha(@myvoice_accent_b, 0.55);
+}
+
+.myvoice-big-button:active {
+    box-shadow: 0 4px 12px -4px alpha(@myvoice_accent_a, 0.5);
+}
+
+/* Idle "breathing" glow — toggled by MainWindow's GLib timer (Task 3).
+   Only applied while not listening; hover/active above still win by
+   selector specificity when the pointer is actually on the button. */
+.myvoice-cta-glow-a {
+    box-shadow: 0 8px 26px -6px alpha(@myvoice_accent_a, 0.55);
+}
+
+.myvoice-cta-glow-b {
+    box-shadow: 0 8px 34px -4px alpha(@myvoice_accent_b, 0.60);
+}
+
+.myvoice-privacy-note {
+    font-size: 9pt;
+    color: @myvoice_text_muted;
+    padding: 2px 0;
+}
+
+.myvoice-transcript {
+    background: @myvoice_surface_raised;
+    color: @myvoice_text;
+    border-radius: 8px;
+    padding: 8px;
+    font-family: monospace;
+}
+
+.myvoice-transcript text {
+    background-color: @myvoice_surface_raised;
+    color: @myvoice_text;
+}
+
+.myvoice-transcript-frame {
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 1px @myvoice_border;
+    transition: box-shadow 150ms ease;
+}
+
+.myvoice-transcript-frame:focus-within {
+    box-shadow: inset 0 0 0 1px alpha(@myvoice_accent_a, 0.45);
+}
+
+.myvoice-transcript-header {
+    padding: 0 2px;
+}
+
+.myvoice-transcript-action {
+    padding: 2px 6px;
+    border-radius: 6px;
+    min-width: 0;
+    min-height: 0;
+    color: @myvoice_text_muted;
+    transition: background-color 150ms ease;
+}
+
+.myvoice-transcript-action:hover {
+    background: alpha(@myvoice_accent_a, 0.16);
+    color: @myvoice_accent_a;
+}
+
+.myvoice-transcript-action:active {
+    background: alpha(@myvoice_accent_a, 0.26);
+}
+
+.myvoice-transcript-action:disabled {
+    opacity: 0.45;
+}
+
+/* Language / microphone dropdowns (main window) */
+.myvoice-combo {
+    border-radius: 8px;
+    background: @myvoice_surface;
+    color: @myvoice_text;
+    transition: box-shadow 150ms ease;
+}
+
+.myvoice-combo:hover {
+    box-shadow: inset 0 0 0 1px alpha(@myvoice_accent_a, 0.35);
+}
+
+.myvoice-combo:focus,
+.myvoice-combo button:focus {
+    box-shadow: inset 0 0 0 2px @myvoice_accent_a;
+}
+
+/* Small icon-only buttons: settings gear, mic refresh, text-app refresh */
+.myvoice-icon-button {
+    padding: 4px;
+    border-radius: 8px;
+    color: @myvoice_text_muted;
+    transition: background-color 150ms ease;
+}
+
+.myvoice-icon-button:hover {
+    background: alpha(@myvoice_accent_a, 0.16);
+    color: @myvoice_accent_a;
+}
+
+.myvoice-icon-button:active {
+    background: alpha(@myvoice_accent_a, 0.26);
+}
+
+.myvoice-quit-button {
+    border-radius: 8px;
+    background: @myvoice_surface;
+    color: @myvoice_text;
+    transition: background-color 150ms ease;
+}
+
+.myvoice-quit-button:hover {
+    background: @myvoice_surface_raised;
+}
+
+.myvoice-quit-button:active {
+    background: alpha(@myvoice_accent_a, 0.20);
+}
+
+/* ---- Settings dialog cards ---- */
+.myvoice-settings-card {
+    background: @myvoice_surface;
+    border: 1px solid @myvoice_border;
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+
+.myvoice-settings-card-title {
+    font-size: 11pt;
+    font-weight: bold;
+    color: @myvoice_accent_a;
+}
+
+.myvoice-settings-input {
+    background: @myvoice_surface_raised;
+    color: @myvoice_text;
+    border-radius: 7px;
+    transition: box-shadow 150ms ease;
+}
+
+.myvoice-settings-input:hover {
+    box-shadow: inset 0 0 0 1px alpha(@myvoice_accent_a, 0.35);
+}
+
+.myvoice-settings-input:focus {
+    box-shadow: inset 0 0 0 2px @myvoice_accent_a;
+}
+
+.myvoice-model-list-frame {
+    border: 1px solid @myvoice_border;
+    border-radius: 7px;
+}
+
+.myvoice-model-list {
+    background: @myvoice_surface_raised;
+}
+
+.myvoice-model-list row {
+    border-bottom: 1px solid @myvoice_border;
+}
+
+.myvoice-model-dot {
+    font-size: 10pt;
+}
+
+.myvoice-model-dot-installed { color: @myvoice_status_ready; }
+.myvoice-model-dot-missing   { color: @myvoice_status_error; }
+
+.myvoice-hotkey-chip {
+    background-image: linear-gradient(135deg, @myvoice_accent_a, @myvoice_accent_b);
+    color: @myvoice_bg;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 6px 12px;
+}

@@ -1,0 +1,39 @@
+name: Build Windows Installer
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Windows dependencies
+        run: pip install -r myvoice_win/requirements-win.txt "pytest>=7"
+
+      - name: Run Windows test suite
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m pytest tests/test_win -q
+
+      - name: Build PyInstaller one-folder app
+        run: pyinstaller myvoice_win/myvoice.spec
+
+      - name: Install Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Compile Inno Setup installer
+        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" myvoice_win\setup.iss'
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MyVoice-Setup
+          path: dist/installer/MyVoice-Setup-1.0.0.exe
+          if-no-files-found: error

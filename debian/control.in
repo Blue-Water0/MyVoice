@@ -1,0 +1,15 @@
+Package: myvoice
+Version: @VERSION@
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: python3 (>= 3.11), python3-venv, python3-pip, python3-dev, python3-gi, python3-gi-cairo, gir1.2-gtk-3.0, libgirepository1.0-dev, gir1.2-notify-0.7, python3-pyatspi, at-spi2-core, portaudio19-dev, libportaudio2, xdotool, libcairo2-dev, pkg-config, gir1.2-ayatanaappindicator3-0.1 | gir1.2-appindicator3-0.1
+Maintainer: MyVoice <myvoice@blue-water0.dev>
+Description: Privacy-first local voice dictation
+ MyVoice is a privacy-first, system-wide local voice dictation app for
+ Linux Mint (Cinnamon, X11). Speech is transcribed entirely on-device
+ using faster-whisper; no audio or transcript ever leaves the machine.
+ .
+ On first install, an internet connection is required so that Python
+ dependencies (faster-whisper, numpy, etc.) can be downloaded. Speech
+ model weights are downloaded separately, on first use of the app.

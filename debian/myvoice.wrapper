@@ -1,0 +1,15 @@
+#!/bin/bash
+# Launches MyVoice from its installed venv.
+set -e
+
+APP_DIR="/usr/lib/myvoice"
+VENV="$APP_DIR/venv"
+SRC="$APP_DIR/src"
+
+if [ ! -d "$VENV" ]; then
+    echo "MyVoice's Python environment is missing. Try: sudo apt install --reinstall myvoice" >&2
+    exit 1
+fi
+
+export PYTHONPATH="$SRC${PYTHONPATH:+:$PYTHONPATH}"
+exec "$VENV/bin/python" -m myvoice.app "$@"
